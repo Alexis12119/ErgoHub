@@ -24,7 +24,7 @@ A modern, psychologically-optimized e-commerce product page for ergonomic office
 
 ```bash
 # Clone repository
-git clone [repository-url]
+git clone https://github.com/Alexis12119/ErgoHub.git
 
 # Navigate to project directory
 cd psych-ecom-page
@@ -59,6 +59,7 @@ src/
 ## Key Components
 
 ### Navbar
+
 - Sticky navigation bar with ShopHub branding
 - Search input (UI only)
 - User account display with circular icon
@@ -66,11 +67,13 @@ src/
 - Mobile-responsive hamburger menu
 
 ### ImageGallery
+
 - Main product image display
 - Thumbnail navigation for multiple images
 - Responsive grid layout
 
 ### DetailsCTA
+
 - Product pricing with discount display
 - Color selection with visual swatches
 - Quantity selector with increment/decrement
@@ -78,6 +81,7 @@ src/
 - Modal purchase flow with form and success animation
 
 ### Purchase Modal
+
 - Product summary with selected options
 - Pricing breakdown (subtotal, shipping, total)
 - Simple checkout form (name, email, address)
@@ -86,11 +90,13 @@ src/
 - Auto-close after 5 seconds
 
 ### ReviewsSection
+
 - Customer reviews with ratings and timestamps
 - Review summary with average rating and count
 - Social proof elements
 
 ### RelatedProducts
+
 - Horizontal scroll carousel
 - Navigation arrows with disabled states
 - Product cards with ratings and pricing
