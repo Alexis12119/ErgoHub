@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface RelatedProduct {
   id: number;
@@ -67,14 +68,18 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ products }) => {
           style={{ scrollBehavior: 'smooth' }}
         >
           {products.map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-64 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <Link
+              key={product.id}
+              to={`/product/${product.id}`}
+              className="flex-shrink-0 w-64 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+            >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <div className="p-4">
-                <h3 className="font-medium text-gray-900 mb-2">{product.name}</h3>
+                <h3 className="font-medium text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{product.name}</h3>
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -87,7 +92,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ products }) => {
                 </div>
                 <p className="text-lg font-bold text-gray-900">${product.price}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
