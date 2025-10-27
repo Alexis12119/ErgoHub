@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
@@ -9,19 +9,19 @@ import {
   ShoppingCartIcon,
   TagIcon,
   InformationCircleIcon,
-  CubeIcon
-} from '@heroicons/react/24/outline';
+  CubeIcon,
+} from "@heroicons/react/24/outline";
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cartCount] = useState(2); // Hardcoded for demo
-  const [username] = useState('John Doe'); // Hardcoded username
+  const [username] = useState("John Doe"); // Hardcoded username
 
   const navLinks = [
-    { name: 'Home', icon: HomeIcon, href: '#' },
-    { name: 'Shop', icon: ShoppingCartIcon, href: '#' },
-    { name: 'Categories', icon: TagIcon, href: '#' },
-    { name: 'About', icon: InformationCircleIcon, href: '#' },
+    { name: "Home", icon: HomeIcon, href: "#" },
+    { name: "Shop", icon: ShoppingCartIcon, href: "#" },
+    { name: "Categories", icon: TagIcon, href: "#" },
+    { name: "About", icon: InformationCircleIcon, href: "#" },
   ];
 
   return (
@@ -29,15 +29,18 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <a href="#" className="flex items-center space-x-2 text-2xl font-bold text-gray-900">
+          <div className="flex-shrink-0 mr-8">
+            <a
+              href="#"
+              className="flex items-center space-x-2 text-2xl font-bold text-gray-900"
+            >
               <CubeIcon className="h-8 w-8" />
               <span>ErgoHub</span>
             </a>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -162,3 +165,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
