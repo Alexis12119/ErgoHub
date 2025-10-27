@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface ImageGalleryProps {
   images: string[];
@@ -11,12 +11,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square">
+      <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-[4/4]">
         <img
           src={images[selectedImage]}
           alt="Product"
           className={`w-full h-full object-cover cursor-zoom-in transition-transform duration-300 ${
-            isZoomed ? 'scale-150' : 'scale-100'
+            isZoomed ? "scale-150" : "scale-100"
           }`}
           onClick={() => setIsZoomed(!isZoomed)}
         />
@@ -39,7 +39,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             key={index}
             onClick={() => setSelectedImage(index)}
             className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-              selectedImage === index ? 'border-blue-500' : 'border-gray-200'
+              selectedImage === index ? "border-blue-500" : "border-gray-200"
             }`}
           >
             <img
@@ -55,3 +55,4 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 };
 
 export default ImageGallery;
+
