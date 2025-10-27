@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
@@ -113,10 +114,10 @@ const Navbar: React.FC = () => {
   const cartCount = cartItems.length;
 
   const navLinks = [
-    { name: "Home", icon: HomeIcon, href: "#" },
+    { name: "Home", icon: HomeIcon, href: "/" },
     { name: "Shop", icon: ShoppingCartIcon, href: "#" },
     { name: "Categories", icon: TagIcon, href: "#" },
-    { name: "About", icon: InformationCircleIcon, href: "#" },
+    { name: "About", icon: InformationCircleIcon, href: "/about" },
   ];
 
   return (
@@ -137,14 +138,14 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
               >
                 <link.icon className="h-4 w-4" />
                 <span>{link.name}</span>
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -223,15 +224,15 @@ const Navbar: React.FC = () => {
             {/* Mobile Nav Links */}
             <div className="space-y-1">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center space-x-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <link.icon className="h-5 w-5" />
                   <span>{link.name}</span>
-                </a>
+                </Link>
               ))}
             </div>
 
