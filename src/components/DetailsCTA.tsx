@@ -144,7 +144,9 @@ const DetailsCTA: React.FC<DetailsCTAProps> = ({
             {/* Modal Header */}
             <div className="flex justify-between items-center p-6 border-b border-gray-200 flex-shrink-0">
               <h2 className="text-xl font-bold text-gray-900">
-                {isPurchaseSuccessful ? "Purchase Confirmed" : "Complete Your Purchase"}
+                {isPurchaseSuccessful
+                  ? "Purchase Confirmed"
+                  : "Complete Your Purchase"}
               </h2>
               <button
                 onClick={handleCloseModal}
@@ -165,10 +167,12 @@ const DetailsCTA: React.FC<DetailsCTAProps> = ({
                         <span className="text-4xl text-green-600">✓</span>
                       </div>
                     </div>
-                  <h3 className="text-2xl font-bold text-gray-900 animate-pulse">
-                    Purchase Successful!
-                  </h3>
-                  <p className="text-gray-600">Thank you for your purchase!</p>
+                    <h3 className="text-2xl font-bold text-gray-900 animate-pulse">
+                      Purchase Successful!
+                    </h3>
+                    <p className="text-gray-600">
+                      Thank you for your purchase!
+                    </p>
                   </div>
                 </div>
               ) : (
