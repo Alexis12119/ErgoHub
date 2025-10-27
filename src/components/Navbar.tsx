@@ -8,7 +8,8 @@ import {
   HomeIcon,
   ShoppingCartIcon,
   TagIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  CubeIcon
 } from '@heroicons/react/24/outline';
 
 const Navbar: React.FC = () => {
@@ -29,8 +30,9 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#" className="text-2xl font-bold text-gray-900">
-              ShopHub
+            <a href="#" className="flex items-center space-x-2 text-2xl font-bold text-gray-900">
+              <CubeIcon className="h-8 w-8" />
+              <span>ErgoHub</span>
             </a>
           </div>
 
