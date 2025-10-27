@@ -322,7 +322,7 @@ const Home: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none"
+                className="flex-1 px-4 py-3 rounded-l-lg text-white placeholder-white border border-white focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-50"
                 required
               />
               <button
