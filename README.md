@@ -27,7 +27,7 @@ A modern, psychologically-optimized e-commerce product page for ergonomic office
 git clone https://github.com/Alexis12119/ErgoHub.git
 
 # Navigate to project directory
-cd psych-ecom-page
+cd ErgoHub
 
 # Install dependencies
 npm install
