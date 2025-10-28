@@ -9,22 +9,91 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
+interface FilterState {
+  searchQuery: string;
+  selectedCategories: string[];
+  priceRange: [number, number];
+  minRating: number;
+  sortBy: string;
+}
+
 const Shop: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 600]);
-  const [minRating, setMinRating] = useState(0);
-  const [sortBy, setSortBy] = useState<'name' | 'price-low' | 'price-high' | 'rating'>('name');
-  const [filtersExpanded, setFiltersExpanded] = useState(true);
+
+  // Initialize filters from localStorage
+  const [filters, setFilters] = useState<FilterState>(() => {
+    const saved = localStorage.getItem('shopFilters');
+    return saved ? JSON.parse(saved) : {
+      searchQuery: '',
+      selectedCategories: [],
+      priceRange: [0, 600],
+      minRating: 0,
+      sortBy: 'name'
+    };
+  });
+
+  const [filtersExpanded, setFiltersExpanded] = useState(() => {
+    const saved = localStorage.getItem('shopFiltersExpanded');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Extract individual filter values for easier access
+  const searchQuery = filters.searchQuery;
+  const selectedCategories = filters.selectedCategories;
+  const priceRange = filters.priceRange;
+  const minRating = filters.minRating;
+  const sortBy = filters.sortBy;
+
+  // Setter functions for individual filter states
+  const setSearchQuery = (value: string) =>
+    setFilters(prev => ({ ...prev, searchQuery: value }));
+
+  const setSelectedCategories = (value: string[] | ((prev: string[]) => string[])) =>
+    setFilters(prev => ({
+      ...prev,
+      selectedCategories: typeof value === 'function' ? value(prev.selectedCategories) : value
+    }));
+
+  const setPriceRange = (value: [number, number]) =>
+    setFilters(prev => ({ ...prev, priceRange: value }));
+
+  const setMinRating = (value: number) =>
+    setFilters(prev => ({ ...prev, minRating: value }));
+
+  const setSortBy = (value: string) =>
+    setFilters(prev => ({ ...prev, sortBy: value }));
 
   // Handle URL parameters for category filtering
   useEffect(() => {
     const categoryParam = searchParams.get('category');
     if (categoryParam) {
-      setSelectedCategories([categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)]);
+      const category = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1);
+      setFilters(prev => ({
+        ...prev,
+        selectedCategories: [category]
+      }));
     }
   }, [searchParams]);
+
+  // Simulate loading delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // 1.5 second loading simulation
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Save filters to localStorage
+  useEffect(() => {
+    localStorage.setItem('shopFilters', JSON.stringify(filters));
+  }, [filters]);
+
+  // Save filter expanded state to localStorage
+  useEffect(() => {
+    localStorage.setItem('shopFiltersExpanded', JSON.stringify(filtersExpanded));
+  }, [filtersExpanded]);
 
   const categories = ['Chairs', 'Desks', 'Accessories', 'Lighting'];
 
@@ -76,12 +145,33 @@ const Shop: React.FC = () => {
   };
 
   const clearFilters = () => {
-    setSearchQuery('');
-    setSelectedCategories([]);
-    setPriceRange([0, 600]);
-    setMinRating(0);
-    setSortBy('name');
+    setFilters({
+      searchQuery: '',
+      selectedCategories: [],
+      priceRange: [0, 600],
+      minRating: 0,
+      sortBy: 'name'
+    });
   };
+
+  // Loading skeleton component
+  const LoadingSkeleton = () => (
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden animate-pulse">
+      <div className="aspect-square bg-gray-200"></div>
+      <div className="p-4">
+        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+        <div className="flex items-center mb-2">
+          <div className="flex space-x-1">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-4 w-4 bg-gray-200 rounded"></div>
+            ))}
+          </div>
+          <div className="h-3 bg-gray-200 rounded ml-2 w-16"></div>
+        </div>
+        <div className="h-5 bg-gray-200 rounded w-20"></div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -223,7 +313,13 @@ const Shop: React.FC = () => {
         </div>
 
         {/* Products Grid */}
-        {filteredAndSortedProducts.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+              <LoadingSkeleton key={i} />
+            ))}
+          </div>
+        ) : filteredAndSortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredAndSortedProducts.map((product) => (
               <Link

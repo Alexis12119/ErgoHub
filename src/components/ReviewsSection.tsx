@@ -267,24 +267,24 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ reviews }) => {
             {/* Modal Content */}
             <div className="flex-1 overflow-y-auto">
               <div className="p-6 space-y-6">
-                {/* Filter Tags - Sticky */}
-                <div className="sticky top-0 bg-white pb-4 border-b border-gray-100 mb-6 -mx-6 px-6">
-                  <div className="flex flex-wrap gap-2">
-                    {['All', '5 Stars', '4 Stars', '3 Stars', 'Recent', ...allTags].map((filter) => (
-                      <button
-                        key={filter}
-                        onClick={() => setActiveFilter(filter)}
-                        className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                          activeFilter === filter
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                      >
-                        {filter}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                 {/* Filter Tags - Sticky */}
+                 <div className="sticky top-0 bg-white pb-6 border-b border-gray-100 mb-6 -mx-6 px-6">
+                   <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                     {['All', '5 Stars', '4 Stars', '3 Stars', 'Recent', ...allTags].map((filter) => (
+                       <button
+                         key={filter}
+                         onClick={() => setActiveFilter(filter)}
+                         className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
+                           activeFilter === filter
+                             ? 'bg-blue-600 text-white'
+                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                         }`}
+                       >
+                         {filter}
+                       </button>
+                     ))}
+                   </div>
+                 </div>
 
                 {/* All Reviews Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
