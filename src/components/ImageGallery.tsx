@@ -6,7 +6,6 @@ interface ImageGalleryProps {
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false);
 
   return (
     <div className="space-y-4">
@@ -15,21 +14,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         <img
           src={images[selectedImage]}
           alt="Product"
-          className={`w-full h-full object-cover cursor-zoom-in transition-transform duration-300 ${
-            isZoomed ? "scale-150" : "scale-100"
-          }`}
-          onClick={() => setIsZoomed(!isZoomed)}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
-        {isZoomed && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <button
-              onClick={() => setIsZoomed(false)}
-              className="text-white text-2xl hover:text-gray-300"
-            >
-              ✕
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Thumbnails */}
