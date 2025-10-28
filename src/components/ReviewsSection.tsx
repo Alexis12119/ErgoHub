@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Review {
   id: number;
@@ -25,6 +25,19 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ reviews }) => {
     content: ''
   });
   const [activeFilter, setActiveFilter] = useState('All');
+
+  // Prevent body scrolling when modals are open
+  useEffect(() => {
+    if (isReviewModalOpen || isReviewsModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isReviewModalOpen, isReviewsModalOpen]);
 
   const INITIAL_REVIEW_COUNT = 6;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Color {
   name: string;
@@ -30,6 +30,19 @@ const DetailsCTA: React.FC<DetailsCTAProps> = ({
   const handleBuyNow = () => {
     setIsBuyNowModalOpen(true);
   };
+
+  // Prevent body scrolling when Buy Now modal is open
+  useEffect(() => {
+    if (isBuyNowModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isBuyNowModalOpen]);
 
   const handleCloseModal = () => {
     setIsBuyNowModalOpen(false);

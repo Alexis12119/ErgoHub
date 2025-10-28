@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   MagnifyingGlassIcon,
@@ -41,6 +41,78 @@ const Navbar: React.FC = () => {
   // Cart items state (mutable)
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
+      id: "3",
+      name: "Wireless Ergonomic Mouse",
+      price: 79.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1625750319971-ee4b61e68df8?ixlib=rb-4.1.0&w=200",
+      color: "Black",
+    },
+    {
+      id: "4",
+      name: "LED Desk Lamp",
+      price: 149.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1571406487954-dc11b0c0767d?ixlib=rb-4.1.0&w=200",
+      color: "White",
+    },
+    {
+      id: "5",
+      name: "Ergonomic Keyboard",
+      price: 99.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?ixlib=rb-4.1.0&w=200",
+      color: "Gray",
+    },
+    {
+      id: "6",
+      name: "Adjustable Monitor Stand",
+      price: 129.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.1.0&w=200",
+      color: "Black",
+    },
+    {
+      id: "7",
+      name: "Ergonomic Office Chair",
+      price: 399.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.1.0&w=200",
+      color: "Blue",
+    },
+    {
+      id: "8",
+      name: "Standing Desk",
+      price: 499.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1605543123001-e33188b556c9?ixlib=rb-4.1.0&w=200",
+      color: "Brown",
+    },
+    {
+      id: "9",
+      name: "Desk Organizer",
+      price: 29.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1616627458425-1c9c1f3b1c9c?ixlib=rb-4.1.0&w=200",
+      color: "White",
+    },
+    {
+      id: "10",
+      name: "Anti-Fatigue Mat",
+      price: 59.99,
+      quantity: 1,
+      image:
+        "https://images.unsplash.com/photo-1616627458425-1c9c1f3b1c9c?ixlib=rb-4.1.0&w=200",
+      color: "Black",
+    },
+    {
       id: "1",
       name: "Ergonomic Cloud Chair Pro",
       price: 499.99,
@@ -59,6 +131,19 @@ const Navbar: React.FC = () => {
       color: "Black",
     },
   ]);
+
+  // Prevent body scrolling when modals are open
+  useEffect(() => {
+    if (isCartModalOpen || isCheckoutSuccessModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isCartModalOpen, isCheckoutSuccessModalOpen]);
 
   // Quantity control functions
   const increaseQuantity = (itemId: string) => {
