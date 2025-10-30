@@ -41,9 +41,6 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ reviews }) => {
 
   const INITIAL_REVIEW_COUNT = 6;
 
-  // Get all unique tags from reviews
-  const allTags = Array.from(new Set(reviews.flatMap((review) => review.tags)));
-
   // Filter reviews based on active filter
   const filteredReviews = reviews.filter((review) => {
     if (activeFilter === "All") return true;

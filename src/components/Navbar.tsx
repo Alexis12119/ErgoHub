@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
@@ -15,6 +15,7 @@ import {
   MinusIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+import ProfileModal from "./ProfileModal";
 
 interface CartItem {
   id: string;
@@ -34,9 +35,11 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isCheckoutSuccessModalOpen, setIsCheckoutSuccessModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"cart" | "purchased">("cart");
   const [searchQuery, setSearchQuery] = useState("");
   const [username] = useState("John Doe"); // Hardcoded username
+  const location = useLocation();
 
   // Cart items state (mutable)
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -134,7 +137,7 @@ const Navbar: React.FC = () => {
 
   // Prevent body scrolling when modals are open
   useEffect(() => {
-    if (isCartModalOpen || isCheckoutSuccessModalOpen) {
+    if (isCartModalOpen || isCheckoutSuccessModalOpen || isProfileModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -143,7 +146,7 @@ const Navbar: React.FC = () => {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isCartModalOpen, isCheckoutSuccessModalOpen]);
+  }, [isCartModalOpen, isCheckoutSuccessModalOpen, isProfileModalOpen]);
 
   // Quantity control functions
   const increaseQuantity = (itemId: string) => {
@@ -226,7 +229,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
+                className={`text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 ${location.pathname === link.href ? 'bg-gray-200' : ''}`}
               >
                 <link.icon className="h-4 w-4" />
                 <span>{link.name}</span>
@@ -253,12 +256,15 @@ const Navbar: React.FC = () => {
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {/* User Account */}
-            <div className="relative flex items-center space-x-2">
+            <button
+              onClick={() => setIsProfileModalOpen(true)}
+              className="relative flex items-center space-x-2 hover:bg-gray-50 px-2 py-1 rounded-md transition-colors"
+            >
               <div className="bg-gray-100 rounded-full p-2">
                 <UserIcon className="h-4 w-4 text-gray-600" />
               </div>
               <span className="text-sm text-gray-700">{username}</span>
-            </div>
+            </button>
 
             {/* Cart */}
             <div className="relative">
@@ -314,7 +320,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center space-x-2"
+                  className={`text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center space-x-2 ${location.pathname === link.href ? 'bg-gray-200' : ''}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <link.icon className="h-5 w-5" />
@@ -326,12 +332,15 @@ const Navbar: React.FC = () => {
             {/* Mobile User Actions */}
             <div className="border-t border-gray-200 pt-4 mt-4">
               <div className="flex items-center justify-between px-3">
-                <div className="text-gray-700 py-2 text-base font-medium flex items-center space-x-2">
+                <button
+                  onClick={() => setIsProfileModalOpen(true)}
+                  className="text-gray-700 py-2 text-base font-medium flex items-center space-x-2 hover:bg-gray-50 px-2 rounded-md transition-colors"
+                >
                   <div className="bg-gray-100 rounded-full p-2">
                     <UserIcon className="h-4 w-4 text-gray-600" />
                   </div>
                   <span>{username}</span>
-                </div>
+                </button>
                 <button
                   onClick={() => setIsCartModalOpen(true)}
                   className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-base font-medium transition-colors relative flex items-center space-x-2"
@@ -661,6 +670,12 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </nav>
   );
 };
